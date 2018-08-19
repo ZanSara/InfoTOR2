@@ -1,0 +1,129 @@
+{% extends 'infotor/base.html' %}
+{% load infotor_template_tags %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "forra.css"%}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static "forra.js" %}"></script>
+<script>
+  // Sovrascrive il numero di righe di default di righe nel campi descrittivi
+  $(document).ready(function(){
+    $("textarea").attr({
+      "rows": "3",
+    });
+
+    $(".checkbox").addClass("form-check form-check-inline");
+    $(".has-error").addClass("is-invalid");
+
+  });
+</script>
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid">
+  {% render_sidebar_forra %}
+  <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4" style="padding-top:70px">
+    {% if form %}
+      {% if form.errors %}
+        {% bootstrap_alert "Controllare che tutti i campi siano corretti" alert_type="danger"%}
+      {% endif %}
+    {% language 'it' %}
+    <form action="." method="POST" id="ForraForm" onsubmit="return confirm('Salvare la Forra?')" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="col-md-5">
+            {% bootstrap_field form.nome label_class='h5' form_group_class='pb-0'%}
+        </div>
+        <div class="col-md-2">
+            {% bootstrap_field form.id label_class='h5' form_group_class='pb-0' %}
+        </div>
+        <div class="ml-auto">
+          <button class="btn btn-success btn-sm ml-auto" type="submit">
+              <i class="fas fa-save fa-fw"></i>
+          </button>
+          <a class="btn btn-danger btn-sm ml-auto"
+            {% if forra %}
+            href="/infotor/forra/{{ forra.id }}"
+            {% else %}
+            href="/infotor/"
+            {% endif %}
+            onclick="return confirm('Annullare le modifiche e uscire?')">
+            <i class="fas fa-times fa-fw"></i>
+          </a>
+        </div>
+
+        <!-- TODO Completare-->
+      </div>
+      <hr>
+      <div class="row section" id="Dati">
+        <div class="col-md-12">
+          {% bootstrap_field form.stagionalita label_class='h6'%}
+        </div>
+        <div class="col-md-5 px-3">
+          {% bootstrap_field form.verticalita layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.acquaticita layout='horizontal' size='small' form_group_class='pb-0'%}
+          {% bootstrap_field form.bellezza layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.divertimento layout='horizontal' size='small' form_group_class='pb-0' %}
+          <br>
+          <!-- TODO vedi di renderizzare meglio questi 3 campi di durata -->
+          {% bootstrap_field form.ore_avvicinamento layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh,mm' %}
+          {% bootstrap_field form.ore_discesa layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh,mm' %}
+          {% bootstrap_field form.ore_rientro layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh,mm' %}
+          {% bootstrap_field form.minuti_navetta layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.km_navetta layout='horizontal' size='small' form_group_class='pb-0' %}
+        </div>
+        <div class="col-md-5 px-3">
+          {% bootstrap_field form.grado_impegno layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.numero_calate layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.calata_massima layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.lunghezza_min_corda layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.numero_min_corde layout='horizontal' size='small' form_group_class='pb-0' %}
+          <br>
+          {% bootstrap_field form.dislivello layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.ampiezza_bacino layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.origine_acqua layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.opere_idrauliche layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.litologia layout='horizontal' size='small' form_group_class='pb-0' %}
+        </div>
+      </div>
+
+      <div class="row section" id="Checkpoints">
+        <div class="form-group col-md-8">
+            {% bootstrap_field form.checkpoint1 label_class='h6' %}
+            {% bootstrap_field form.checkpoint2 label_class='h6' %}
+        </div>
+      </div>
+
+      <div class="row section" id="Informazioni">
+        <div class="form-group col-md-5 px-3">
+          {% bootstrap_field form.presentazione_forra label_class='h6' %}
+          {% bootstrap_field form.descr_accesso_valle label_class='h6' %}
+          {% bootstrap_field form.descr_avvicinamento label_class='h6' %}
+          {% bootstrap_field form.descr_uscita label_class='h6' %}
+        </div>
+        <div class="form-group col-md-5 px-3">
+          {% bootstrap_field form.vincoli_ambientali label_class='h6' %}
+          {% bootstrap_field form.descr_accesso_monte label_class='h6' %}
+          {% bootstrap_field form.descr_percorso label_class='h6' %}
+        </div>
+      </div>
+
+      <div class="row section" id="Profilo">
+        <div class="form-group col-md-8">
+          {% bootstrap_field form.profilo label_class='h6' %}
+          {% bootstrap_field form.note label_class='h6' %}
+        </div>
+      </div>
+    </form>
+    {% endlanguage %}
+    {% else %}
+    <h2>Errore: form mancante!</h2>
+    {% endif %}
+  </main>
+</div>
+{% endblock %}

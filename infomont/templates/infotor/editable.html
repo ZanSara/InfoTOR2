@@ -1,0 +1,8 @@
+{% if field %}
+<div class="form-group">
+  <label for="{{ field.name }}">{{ field.name }}</label>
+  <input type="text" class="form-control" id="{{ field.name }}" placeholder="{{ field.data }}">
+</div>
+{% else %}
+<p>Errore: Campo mancante!</p>
+{% endif %}

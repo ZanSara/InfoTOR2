@@ -1,0 +1,44 @@
+{% extends 'infotor/base.html' %}
+{% load infotor_template_tags %}
+{% load staticfiles %}
+
+{% block main %}
+<div class="container-fluid">
+  <div class="row">
+
+    {% render_sidebar %}
+
+    <main role="main" class="col-md-10 ml-auto col-lg-10 px-4" style="padding-top:70px">
+      <h1 class="pl-3">Forre di competenza:</h1>
+      <ul class="p-3">
+        {% if forre %}
+          <table class="table table-sm table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" style="width: 40%">Nome</th>
+                <th scope="col" style="width: 15%"><i class="fas fa-chart-line"></i> Dislivello</th>
+                <th scope="col" style="width: 15%"><i class="fas fa-arrow-right"></i><i class="fas fa-stopwatch"></i> Avvic.</th>
+                <th scope="col" style="width: 15%"><i class="fas fa-stopwatch"></i><i class="fas fa-arrow-down"></i> Discesa</th>
+                <th scope="col" style="width: 15%"><i class="fas fa-stopwatch"></i><i class="fas fa-arrow-right"></i> Rientro</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for forra in forre %}
+              <tr>
+                <td><a href="{% url 'mostra_forra' forra.id %}">{{ forra.nome }}</a></td>
+                <td>{{ forra.dislivello }}m</td>
+                <td>{{ forra.ore_avvicinamento }}h</td>
+                <td>{{ forra.ore_discesa }}h</td>
+                <td>{{ forra.ore_rientro }}h</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+        <li>Errore! Nessuna forra disponibile</li>
+        {% endif %}
+      </ul>
+    </main>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% if field %}
+<div class="form-group">
+    <label for="{{ field.name }} ">Example select</label>
+    <select class="form-control" id="{{ field.name }}">
+      {% if choices %}
+        {% for choice in choices %}
+            {% if choice.selected %}
+                <option selected>{{ choice.name }}</option>
+            {% else %}
+                <option>{{ choice.name }}</option>
+            {% endif %}
+        {% endfor %}
+      {% endif %}
+    </select>
+  </div>
+{% else %}
+<p>Errore: Campo mancante!</p>
+{% endif %}

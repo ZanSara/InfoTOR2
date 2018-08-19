@@ -1,0 +1,252 @@
+{% extends 'infotor/base.html' %}
+{% load infotor_template_tags %}
+{% load staticfiles %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "forra.css"%}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static "forra.js" %}"></script>
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid">
+  {% render_sidebar_forra %}
+  <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4" style="padding-top:70px">
+    {% if forra %}
+    <div class="row">
+      <div class="col-5">
+        <span class="h1">{{ forra.nome }}</span>
+      </div>
+      <div class="col-2 pt-2">
+        <h6>ID<br>{{ forra.id }}</h6>
+      </div>
+      <div class="col-2 pt-2">
+        <h6>Percorso<br>_439453</h6>
+      </div>
+      <div class="col-2 pt-2">
+        <h6>Tratta<br>_484287</h6>
+      </div>
+      <div class="col-1 pt-2">
+        <a class="btn btn-primary btn-sm" href="{% url 'modifica_forra' forra.id %}" role="button">
+          <i class="fas fa-pencil-alt"></i>
+        </a>
+      </div>
+    </div>
+    <hr>
+
+    <!-- SEZIONE DATI -->
+    <div class="row section" id="Dati">
+      <div class="col-md-12">
+        <p>
+          <i class="fas fa-calendar-check"></i>
+          <b>Mesi ok:</b>
+          {% for mese in forra.stagionalita.all %}
+            {% if forloop.counter == forra.stagionalita.all|length %}
+            {{ mese }}
+            {% else %}
+              {{ mese }},
+            {% endif %}
+          {% endfor %}
+        </p>
+      </div>
+      <div class="col-md-5 col-sm-6">
+        <!-- Tabella punteggi -->
+        {% if livelli and punteggi %}
+        <table class="table table-sm table-borderless">
+          <tbody>
+            <tr>
+              <td>Verticalità</td>
+              <td>
+                {% for i in livelli %}
+                  {% if forloop.counter <= forra.verticalita %}
+                  <i class="fas fa-arrow-up checked-vertical fa-fw"></i>
+                  {% else %}
+                  <i class="fas fa-arrow-up fa-fw"></i>
+                  {% endif %}
+                {% endfor %}
+              </td>
+            </tr>
+            <tr>
+              <td>Acquaticità</td>
+              <td>
+                {% for i in livelli %}
+                  {% if forloop.counter <= forra.acquaticita %}
+                  <i class="fas fa-tint checked-water fa-fw"></i>
+                  {% else %}
+                  <i class="fas fa-tint fa-fw"></i>
+                  {% endif %}
+                {% endfor %}
+              </td>
+            </tr>
+            <tr>
+              <td>Bellezza</td>
+              <td>
+                {% for i in punteggi %}
+                  {% if forloop.counter <= forra.bellezza %}
+                  <i class="fas fa-star checked-star fa-fw"></i>
+                  {% else %}
+                  <i class="fas fa-star fa-fw"></i>
+                  {% endif %}
+                {% endfor %}
+                </td>
+            </tr>
+            <tr>
+              <td>Divertimento</td>
+              <td>
+                {% for i in punteggi %}
+                  {% if forloop.counter <= forra.divertimento %}
+                  <i class="fas fa-smile-beam checked-smile fa-fw"></i>
+                  {% else %}
+                  <i class="fas fa-smile-beam fa-fw"></i>
+                  {% endif %}
+                {% endfor %}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        {% else %}
+        <p>Errore: punteggi mancanti</p>
+        {% endif %}
+        <!-- Tabella orari e distanze -->
+        <table class="table table-sm table-borderless">
+            <col width="65%">
+            <col width="35%">
+            <tbody>
+              <tr>
+                <td>Quota partenza forra (slm)</td>
+                <td>_234</td>
+              </tr>
+              <tr>
+                <td>Quota arrivo forra (slm)</td>
+                <td>_345</td>
+              </tr>
+              <tr>
+                <td>Ore avvicinamento</td>
+                <td>{{ forra.ore_avvicinamento|as_time }}</td>
+              </tr>
+              <tr>
+                <td>Ore discesa</td>
+                <td>{{ forra.ore_discesa|as_time }}</td>
+              </tr>
+              <tr>
+                <td>Ore rientro</td>
+                <td>{{ forra.ore_rientro|as_time }}</td>
+              </tr>
+              <tr>
+                <td>Minuti navetta</td>
+                <td>{{ forra.minuti_navetta }}</td>
+              </tr>
+              <tr>
+                <td>Kilometri navetta</td>
+                <td>{{ forra.km_navetta }}</td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="col-md-5 col-sm-6">
+        <!-- Tabella corde e calate -->
+        <table class="table table-sm table-borderless">
+            <col width="65%">
+            <col width="35%">
+            <tbody>
+              <tr>
+                <td>Grado Impegno</td>
+                <td>{{ forra.grado_impegno }}</td>
+              </tr>
+              <tr>
+                <td>Numero calate</td>
+                <td>{{ forra.numero_calate }}</td>
+              </tr>
+              <tr>
+                <td>Calata massima (m)</td>
+                <td>{{ forra.calata_massima }}</td>
+              </tr>
+              <tr>
+                <td>Lunghezza minima corda (m)</td>
+                <td>{{ forra.lunghezza_min_corda }}</td>
+              </tr>
+              <tr>
+                <td>Numero minimo di corde</td>
+                <td>{{ forra.numero_min_corde }}</td>
+              </tr>
+            </tbody>
+        </table>
+        <!-- Tabella altre info-->
+        <table class="table table-sm table-borderless">
+          <col width="65%">
+          <col width="35%">
+          <tbody>
+            <tr>
+            <td>Dislivello (m)</td>
+            <td>{{ forra.dislivello }}</td>
+            </tr>
+            <tr>
+              <td>Ampiezza bacino (km2)</td>
+              <td>{{ forra.ampiezza_bacino }}</td>
+            </tr>
+            <tr>
+              <td>Origine acqua</td>
+              <td>{{ forra.origine_acqua }}</td>
+            </tr>
+            <tr>
+              <td>Opere idrauliche</td>
+              <td>{{ forra.opere_idrauliche }}</td>
+            </tr>
+            <tr>
+              <td>Litologia</td>
+              <td>{{ forra.litologia }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SEZIONE CHECKPOINTS -->
+    <div class="row section pt-2" id="Checkpoints">
+      <div class="col-md-6">
+        <h4 class="font-weight-light">Checkpoint 1:</h4>
+        <img class="img-fluid img-thumbnail mt-2" src="{{ MEDIA_URL }}{{ forra.checkpoint1 }}">
+      </div>
+      <div class="col-md-6">
+        <h4 class="font-weight-light"> Checkpoint 2:</h4>
+        <img class="img-fluid img-thumbnail mt-2" src="{{ MEDIA_URL }}{{ forra.checkpoint2 }}">
+      </div>
+    </div>
+
+    <!-- SEZIONE INFORMAZIONI TESTUALi-->
+    <div class="row section pt-2" id="Informazioni">
+      <div class="col-12">
+        <h5>Presentazione forra</h5>
+        <p>{{ forra.presentazione_forra }}</p>
+        <h5>Vincoli ambientali</h5>
+        <p>{{ forra.vincoli_ambientali }}</p>
+        <h5>Descrizione accesso a valle</h5>
+        <p>{{ forra.descr_accesso_valle }}</p>
+        <h5>Descrizione accesso a monte</h5>
+        <p>{{ forra.descr_accesso_monte }}</p>
+        <h5>Descrizione avvicinamento</h5>
+        <p>{{ forra.descr_avvicinamento }}</p>
+        <h5>Descrizione percorso</h5>
+        <p>{{ forra.descr_percorso }}</p>
+        <h5>Descrizione uscita</h5>
+        <p>{{ forra.descr_uscita }}</p>
+      </div>
+    </div>
+
+    <!-- SEZIONE PROFILO -->
+    <div class="row section pt-2" id="Profilo">
+      <div class="col-md-10">
+        <h4 class="font-weigth-light">Profilo</h4>
+        <img class="img-fluid" src="{{ MEDIA_URL }}{{ forra.profilo }}" width="50%">
+        <h5>Note</h5>
+        <p>{{ forra.note }}</p>
+      </div>
+    </div>
+    {% else %}
+    <h1>Errore: forra mancante!</h1>
+    {% endif %}
+  </main>
+</div>
+{% endblock %}

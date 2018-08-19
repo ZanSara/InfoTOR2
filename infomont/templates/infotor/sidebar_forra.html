@@ -1,0 +1,37 @@
+<nav class="col-1 col-md-2 col-lg-2 d-md-block bg-secondary sidebar">
+  <div class="sidebar-sticky">
+    <ul class="navbar-nav pt-4">
+      <li class="nav-item nav-elem text-nowrap">
+        <a class="nav-link text-light px-3" href="{% url 'index' %}">
+          <i class="fas fa-arrow-left fa-fw"></i>
+          <span class="px-2 font-weight-light">Tutte le Forre</span>
+        </a>
+      </li>
+      <br>
+      <li class="nav-item nav-elem text-nowrap">
+        <a class="nav-link text-light px-3" onclick="switch_section('Dati');" id="Link-Dati" href="#Dati">
+          <i class="fas fa-list-ul fa-fw"></i>
+          <span class="px-2 font-weight-light">Dati</span>
+        </a>
+      </li>
+      <li class="nav-item nav-elem text-nowrap">
+        <a class="nav-link text-light px-3" onclick="switch_section('Checkpoints');" id="Link-Checkpoints" href="#Checkpoints">
+          <i class="fas fa-map-signs fa-fw"></i>
+          <span class="px-2 font-weight-light">Checkpoints</span>
+        </a>
+      </li>
+      <li class="nav-item nav-elem text-nowrap">
+        <a class="nav-link text-light px-3" onclick="switch_section('Informazioni');" id="Link-Informazioni" href="#Informazioni">
+          <i class="fas fa-info-circle fa-fw"></i>
+          <span class="px-2 font-weight-light">Informazioni</span>
+        </a>
+      </li>
+      <li class="nav-item nav-elem text-nowrap">
+        <a class="nav-link text-light px-3" onclick="switch_section('Profilo');" id="Link-Profilo" href="#Profilo">
+          <i class="fas fa-image fa-fw"></i>
+          <span class="px-2 font-weight-light">Profilo Forra</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
