@@ -18,15 +18,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+# See below for static file serving configurations
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'uaf54$woo%@m($i9skib5f9=clk4=aijfm8e81cbyyr7!lx@@y'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'uaf54$woo%@m($i9skib5f9=clk4=aijfm8e81cbyyr7!lx@@y')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+# Note: It would be more intuitive if we could just set and unset the DJANGO_DEBUG environment variable to True and False directly, rather than using "any string" or "empty string" (respectively). Unfortunately environment variable values are stored as Python strings, and the only string that evaluates as False is the empty string (e.g. bool('')==False).
 
 ALLOWED_HOSTS = []
 
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,6 +128,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [STATIC_DIR, ]
@@ -200,3 +206,15 @@ NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=infotor',
 ]
+
+
+
+
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
