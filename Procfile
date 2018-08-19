@@ -1,1 +1,1 @@
-web: gunicorn infomont.infomont.wsgi --log-file -
+web: gunicorn infomont.wsgi --log-file -
