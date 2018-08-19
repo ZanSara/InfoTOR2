@@ -32,6 +32,7 @@ DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 # Note: It would be more intuitive if we could just set and unset the DJANGO_DEBUG environment variable to True and False directly, rather than using "any string" or "empty string" (respectively). Unfortunately environment variable values are stored as Python strings, and the only string that evaluates as False is the empty string (e.g. bool('')==False).
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     'infotor.herokuapp.com',
 ]
 
