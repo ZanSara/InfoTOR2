@@ -25,7 +25,7 @@
             <tbody>
               {% for forra in forre %}
               <tr>
-                <td><a href="{% url 'mostra_forra' forra.id %}">{{ forra.nome }}</a></td>
+                <td><a href="{% url 'mostra_forra' forra.numero %}">{{ forra.nome }}</a></td>
                 <td>{{ forra.dislivello }}m</td>
                 <td>{{ forra.ore_avvicinamento }}h</td>
                 <td>{{ forra.ore_discesa }}h</td>

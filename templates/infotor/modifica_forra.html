@@ -28,7 +28,7 @@
 <div class="container-fluid">
   {% render_sidebar_forra %}
   <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4" style="padding-top:70px">
-    {% if form %}
+    {#% if form %#}
       {% if form.errors %}
         {% bootstrap_alert "Controllare che tutti i campi siano corretti" alert_type="danger"%}
       {% endif %}
@@ -39,8 +39,10 @@
         <div class="col-md-5">
             {% bootstrap_field form.nome label_class='h5' form_group_class='pb-0'%}
         </div>
+        <div class="col-md-1"></div>
         <div class="col-md-2">
-            {% bootstrap_field form.id label_class='h5' form_group_class='pb-0' %}
+            <h5 class="pb-0">Id:</h5>
+            <h5 class="pb-0">{{ forra.numero }}</h5>
         </div>
         <div class="ml-auto">
           <button class="btn btn-success btn-sm ml-auto" type="submit">
@@ -48,7 +50,7 @@
           </button>
           <a class="btn btn-danger btn-sm ml-auto"
             {% if forra %}
-            href="/infotor/forra/{{ forra.id }}"
+            href="/infotor/forra/{{ forra.numero }}"
             {% else %}
             href="/infotor/"
             {% endif %}
@@ -121,9 +123,9 @@
       </div>
     </form>
     {% endlanguage %}
-    {% else %}
-    <h2>Errore: form mancante!</h2>
-    {% endif %}
+    {#% else %#}
+    <!--h2>Errore: form mancante!</h2-->
+    {#% endif %#}
   </main>
 </div>
 {% endblock %}

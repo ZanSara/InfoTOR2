@@ -9,10 +9,11 @@ PUNTEGGI = ((1, 1), (2, 2), (3, 3), (4, 4))
 LIVELLI = ((1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7))
 
 class Forra(models.Model):
-    id = models.IntegerField(verbose_name='Id Forra', db_column='id', primary_key=True)
+
+    id = models.IntegerField(verbose_name='Id', db_column='NUME', primary_key=True)
 
     nome = models.CharField(verbose_name='Nome Forra', db_column='TREK1', max_length=80)
-    #id_percorso = models.ForeignKey('Percorso', verbose_name='Id Percorso', db_column='IDPERC')
+    id_percorso = models.ForeignKey('Percorso', verbose_name='Id Percorso', db_column='IDPERC')
 
     # TODO aggiungere i campi di collegamento che non mi sembrano tanto ok
     # id percorso

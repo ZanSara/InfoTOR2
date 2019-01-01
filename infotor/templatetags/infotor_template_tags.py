@@ -17,3 +17,4 @@ def render_sidebar_forra():
 @register.filter
 def as_time(value):
     return str(value).replace('.', ':')
+    
