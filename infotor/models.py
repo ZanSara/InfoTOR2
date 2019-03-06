@@ -9,55 +9,55 @@ PUNTEGGI = ((1, 1), (2, 2), (3, 3), (4, 4))
 LIVELLI = ((1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7))
 
 class Forra(models.Model):
-    id = models.IntegerField(verbose_name='Id Forra', db_column='id', primary_key=True)
+    id = models.IntegerField(verbose_name='Id Forra', db_column='NUME', primary_key=True)
 
     nome = models.CharField(verbose_name='Nome Forra', db_column='TREK1', max_length=80)
-    #id_percorso = models.ForeignKey('Percorso', verbose_name='Id Percorso', db_column='IDPERC')
-
+    # id_percorso = models.ForeignKey('Percorso', verbose_name='Id Percorso', db_column='IDPERC')
+    
     # TODO aggiungere i campi di collegamento che non mi sembrano tanto ok
     # id percorso
     # numero percorso
     # nome tratta
 
-    grado_impegno = models.ForeignKey('GradoImpegno', verbose_name='Grado Impegno', db_column='IMPTOR')
+    grado_impegno = models.ForeignKey('GradoImpegno', verbose_name='Grado Impegno', db_column='IMPTOR', null=True, blank=True)
 
     verticalita = models.DecimalField(verbose_name='Livello Verticalità', db_column='LIVVER', choices=LIVELLI,
-        max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(len(LIVELLI))])
+        max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(len(LIVELLI))], null=True, blank=True)
     acquaticita = models.DecimalField(verbose_name='Livello Acquaticità', db_column='LIVH2O', choices=LIVELLI,
-        max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(len(LIVELLI))])
+        max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(len(LIVELLI))], null=True, blank=True)
     bellezza = models.DecimalField(verbose_name='Punteggio Bellezza', db_column='LIVBEL', choices=PUNTEGGI,
-        max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(len(PUNTEGGI))])
+        max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(len(PUNTEGGI))], null=True, blank=True)
     divertimento = models.DecimalField(verbose_name='Punteggio Divertimento', db_column='LIVDIV', choices=PUNTEGGI,
-        max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(len(PUNTEGGI))])
+        max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(len(PUNTEGGI))], null=True, blank=True)
 
     numero_calate = models.DecimalField(verbose_name='Numero Calate', db_column='NUMC',
-        max_digits=1, decimal_places=0, validators=[MinValueValidator(0)])
+        max_digits=1, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
     calata_massima = models.DecimalField(verbose_name='Calata Massima', db_column='CALMAX',
-        max_digits=1, decimal_places=0, validators=[MinValueValidator(0)])
+        max_digits=1, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
     lunghezza_min_corda = models.DecimalField(verbose_name='Lunghezza minima corda singola', db_column='CORMIN',
-        max_digits=2, decimal_places=0, validators=[MinValueValidator(0)])
+        max_digits=2, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
     numero_min_corde = models.DecimalField(verbose_name='Numero minimo di corde', db_column='MINCORDE',
-        max_digits=1, decimal_places=0, validators=[MinValueValidator(0)])
+        max_digits=1, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
     dislivello = models.DecimalField(verbose_name='Dislivello (m)', db_column='DISLIV',
-        max_digits=2, decimal_places=0)
+        max_digits=2, decimal_places=0, null=True, blank=True)
     ampiezza_bacino = models.DecimalField(verbose_name='Ampiezza Bacino (km2)', db_column='AMPBAC',
-        max_digits=4, decimal_places=0, validators=[MinValueValidator(0)])
+        max_digits=4, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
 
     origine_acqua = models.ForeignKey('OrigineAcqua', verbose_name='Origine Acqua', db_column='ORIGACQUA', null=True, blank=True)
     # TODO completare
     # quota partenza forra
     # quota arrivo forra
     ore_avvicinamento = models.DecimalField(verbose_name='Ore Avvicinamento', db_column='HAVV',
-        max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator])
+        max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator], null=True, blank=True)
     ore_discesa = models.DecimalField(verbose_name='Ore Discesa', db_column='HCAL',
-        max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator])
+        max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator], null=True, blank=True)
     ore_rientro = models.DecimalField(verbose_name='Ore Rientro', db_column='HRIE',
-        max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator])
+        max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator], null=True, blank=True)
 
     minuti_navetta = models.DecimalField(verbose_name='Minuti Navetta', db_column='MMNAV',
-        max_digits=3, decimal_places=0, validators=[MinValueValidator(0)])
+        max_digits=3, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
     km_navetta = models.DecimalField(verbose_name='Kilometri Navetta', db_column='KMNAV',
-        max_digits=3, decimal_places=0, validators=[MinValueValidator(0)])
+        max_digits=3, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
 
     opere_idrauliche = models.ForeignKey('OperaIdraulica', verbose_name='Opere Idrauliche', db_column='OPEIDR', null=True, blank=True)
     litologia = models.ForeignKey('Litologia', verbose_name='Litologia', db_column='LITOL', null=True, blank=True)
@@ -71,23 +71,23 @@ class Forra(models.Model):
 
     # --- Informazioni (Memo / Testo libero) ---
     vincoli_ambientali = models.TextField(verbose_name='Vincoli ambientali', db_column='VINCOLI',
-        max_length=250, blank=True)
+        max_length=250, null=True, blank=True)
     presentazione_forra = models.TextField(verbose_name='Presentazione forra', db_column='PRES',
-        max_length=250, blank=True)
+        max_length=250, null=True, blank=True)
     descr_accesso_valle = models.TextField(verbose_name='Descrizione accesso a valle', db_column='DESACCV',
-        max_length=250, blank=True)
+        max_length=250, null=True, blank=True)
     descr_accesso_monte = models.TextField(verbose_name='Descrizione accesso a monte', db_column='DESACCM',
-        max_length=250, blank=True)
+        max_length=250, null=True, blank=True)
     descr_avvicinamento = models.TextField(verbose_name='Descrizione avvicinamento', db_column='DESAVV',
-        max_length=250, blank=True)
+        max_length=250, null=True, blank=True)
     descr_percorso = models.TextField(verbose_name='Descrizione percorso', db_column='DESPERC',
-        max_length=250, blank=True)
+        max_length=250, null=True, blank=True)
     descr_uscita = models.TextField(verbose_name='Descrizione uscita', db_column='DESUSC',
-        max_length=250, blank=True)
+        max_length=250, null=True, blank=True)
 
     # --- Profilo forra ---
     profilo = models.ImageField(upload_to='profili/', verbose_name='Profilo Forra', db_column='PROFILO', null=True, blank=True)
-    note = models.TextField(verbose_name='Note', db_column='NOTE', max_length=250, blank=True)
+    note = models.TextField(verbose_name='Note', db_column='NOTE', max_length=250, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Forre'
@@ -95,36 +95,43 @@ class Forra(models.Model):
     def __str__(self):
         return str(self.id)
 
-    def save(self, *args, **kwargs):
-        Forra._validate_range(self.verticalita, 1, len(LIVELLI))
-        Forra._validate_range(self.acquaticita, 1, len(LIVELLI))
-        Forra._validate_range(self.bellezza, 1, len(PUNTEGGI))
-        Forra._validate_range(self.divertimento, 1, len(PUNTEGGI))
-        Forra._validate_non_negative(self.numero_calate)
-        Forra._validate_non_negative(self.calata_massima)
-        Forra._validate_non_negative(self.lunghezza_min_corda)
-        Forra._validate_non_negative(self.numero_min_corde)
-        Forra._validate_non_negative(self.ampiezza_bacino)
-        Forra._validate_non_negative(self.minuti_navetta)
-        Forra._validate_non_negative(self.km_navetta)
-        Forra._validate_decimal_duration(self.ore_avvicinamento)
-        Forra._validate_decimal_duration(self.ore_discesa)
-        Forra._validate_decimal_duration(self.ore_rientro)
-        super(Forra, self).save(*args, **kwargs)
-
+    """
+        def save(self, *args, **kwargs):
+            Forra._validate_range(self.verticalita, 1, len(LIVELLI))
+            Forra._validate_range(self.acquaticita, 1, len(LIVELLI))
+            Forra._validate_range(self.bellezza, 1, len(PUNTEGGI))
+            Forra._validate_range(self.divertimento, 1, len(PUNTEGGI))
+            Forra._validate_non_negative(self.numero_calate)
+            Forra._validate_non_negative(self.calata_massima)
+            Forra._validate_non_negative(self.lunghezza_min_corda)
+            Forra._validate_non_negative(self.numero_min_corde)
+            Forra._validate_non_negative(self.ampiezza_bacino)
+            Forra._validate_non_negative(self.minuti_navetta)
+            Forra._validate_non_negative(self.km_navetta)
+            Forra._validate_decimal_duration(self.ore_avvicinamento)
+            Forra._validate_decimal_duration(self.ore_discesa)
+            Forra._validate_decimal_duration(self.ore_rientro)
+            super(Forra, self).save(*args, **kwargs)
+    """
     @staticmethod
     def _validate_range(value, min_value, max_value):
+        if value is None or value == "":
+            return
         value = int(value)
         if value < min_value or value > max_value:
             raise ValueError('Value not in range')
 
     @staticmethod
     def _validate_non_negative(value):
+        if value is None or value == "":
+            return
         if value < 0:
             raise ValueError('Value cannot be negative')
 
     @staticmethod
     def _validate_decimal_duration(value):
+        if value is None or value == "":
+            return
         Forra._validate_non_negative(value)
         frac, _ = modf(value)
         if frac >= 0.60:

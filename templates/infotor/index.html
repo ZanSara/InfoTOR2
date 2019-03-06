@@ -26,10 +26,10 @@
               {% for forra in forre %}
               <tr>
                 <td><a href="{% url 'mostra_forra' forra.id %}">{{ forra.nome }}</a></td>
-                <td>{{ forra.dislivello }}m</td>
-                <td>{{ forra.ore_avvicinamento }}h</td>
-                <td>{{ forra.ore_discesa }}h</td>
-                <td>{{ forra.ore_rientro }}h</td>
+                <td>{{ forra.quota_fine|minus:forra.quota_inizio }} m</td>
+                <td>{{ forra.tempo_andata|as_minutes }} h</td>
+                <td>{{ forra.ore_discesa }} h</td>
+                <td>{{ forra.tempo_ritorno|as_minutes }} h</td>
               </tr>
               {% endfor %}
             </tbody>

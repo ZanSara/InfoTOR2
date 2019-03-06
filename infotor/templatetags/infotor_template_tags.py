@@ -17,3 +17,13 @@ def render_sidebar_forra():
 @register.filter
 def as_time(value):
     return str(value).replace('.', ':')
+    
+@register.filter
+def as_minutes(value):
+    minuti = int(value) % 60
+    ore = int(int(value) / 60 )
+    return "{}:{}".format(ore, minuti)
+    
+@register.filter
+def minus(value, arg):
+    return int(value) - int(arg)
