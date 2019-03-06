@@ -95,24 +95,23 @@ class Forra(models.Model):
     def __str__(self):
         return str(self.id)
 
-    """
-        def save(self, *args, **kwargs):
-            Forra._validate_range(self.verticalita, 1, len(LIVELLI))
-            Forra._validate_range(self.acquaticita, 1, len(LIVELLI))
-            Forra._validate_range(self.bellezza, 1, len(PUNTEGGI))
-            Forra._validate_range(self.divertimento, 1, len(PUNTEGGI))
-            Forra._validate_non_negative(self.numero_calate)
-            Forra._validate_non_negative(self.calata_massima)
-            Forra._validate_non_negative(self.lunghezza_min_corda)
-            Forra._validate_non_negative(self.numero_min_corde)
-            Forra._validate_non_negative(self.ampiezza_bacino)
-            Forra._validate_non_negative(self.minuti_navetta)
-            Forra._validate_non_negative(self.km_navetta)
-            Forra._validate_decimal_duration(self.ore_avvicinamento)
-            Forra._validate_decimal_duration(self.ore_discesa)
-            Forra._validate_decimal_duration(self.ore_rientro)
-            super(Forra, self).save(*args, **kwargs)
-    """
+    def save(self, *args, **kwargs):
+        Forra._validate_range(self.verticalita, 1, len(LIVELLI))
+        Forra._validate_range(self.acquaticita, 1, len(LIVELLI))
+        Forra._validate_range(self.bellezza, 1, len(PUNTEGGI))
+        Forra._validate_range(self.divertimento, 1, len(PUNTEGGI))
+        Forra._validate_non_negative(self.numero_calate)
+        Forra._validate_non_negative(self.calata_massima)
+        Forra._validate_non_negative(self.lunghezza_min_corda)
+        Forra._validate_non_negative(self.numero_min_corde)
+        Forra._validate_non_negative(self.ampiezza_bacino)
+        Forra._validate_non_negative(self.minuti_navetta)
+        Forra._validate_non_negative(self.km_navetta)
+        Forra._validate_decimal_duration(self.ore_avvicinamento)
+        Forra._validate_decimal_duration(self.ore_discesa)
+        Forra._validate_decimal_duration(self.ore_rientro)
+        super(Forra, self).save(*args, **kwargs)
+
     @staticmethod
     def _validate_range(value, min_value, max_value):
         if value is None or value == "":

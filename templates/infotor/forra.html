@@ -23,10 +23,10 @@
         <h6>ID<br>{{ forra.id }}</h6>
       </div>
       <div class="col-2 pt-2">
-        <h6>Percorso<br>_439453</h6>
+        <h6>Percorso<br>COSA VA MESSO QUI?</h6>
       </div>
       <div class="col-2 pt-2">
-        <h6>Tratta<br>_484287</h6>
+        <h6>Tratta<br>COSA VA MESSO QUI?</h6>
       </div>
       <div class="col-1 pt-2">
         <a class="btn btn-primary btn-sm" href="{% url 'modifica_forra' forra.id %}" role="button">
@@ -116,11 +116,11 @@
             <tbody>
               <tr>
                 <td>Quota partenza forra (slm)</td>
-                <td>_234</td>
+                <td>{{ forra.quota_inizio|value_or_dashes }}</td>
               </tr>
               <tr>
                 <td>Quota arrivo forra (slm)</td>
-                <td>_345</td>
+                <td>{{ forra.quota_fine|value_or_dashes }}</td>
               </tr>
               <tr>
                 <td>Ore avvicinamento</td>
@@ -136,11 +136,11 @@
               </tr>
               <tr>
                 <td>Minuti navetta</td>
-                <td>{{ forra.minuti_navetta }}</td>
+                <td>{{ forra.minuti_navetta|value_or_dashes }}</td>
               </tr>
               <tr>
                 <td>Kilometri navetta</td>
-                <td>{{ forra.km_navetta }}</td>
+                <td>{{ forra.km_navetta|value_or_dashes }}</td>
               </tr>
             </tbody>
         </table>
@@ -153,23 +153,23 @@
             <tbody>
               <tr>
                 <td>Grado Impegno</td>
-                <td>{{ forra.grado_impegno }}</td>
+                <td>{{ forra.grado_impegno|value_or_dashes }}</td>
               </tr>
               <tr>
                 <td>Numero calate</td>
-                <td>{{ forra.numero_calate }}</td>
+                <td>{{ forra.numero_calate|value_or_dashes }}</td>
               </tr>
               <tr>
                 <td>Calata massima (m)</td>
-                <td>{{ forra.calata_massima }}</td>
+                <td>{{ forra.calata_massima|value_or_dashes }}</td>
               </tr>
               <tr>
                 <td>Lunghezza minima corda (m)</td>
-                <td>{{ forra.lunghezza_min_corda }}</td>
+                <td>{{ forra.lunghezza_min_corda|value_or_dashes }}</td>
               </tr>
               <tr>
                 <td>Numero minimo di corde</td>
-                <td>{{ forra.numero_min_corde }}</td>
+                <td>{{ forra.numero_min_corde|value_or_dashes }}</td>
               </tr>
             </tbody>
         </table>
@@ -180,23 +180,23 @@
           <tbody>
             <tr>
             <td>Dislivello (m)</td>
-            <td>{{ forra.dislivello }}</td>
+            <td>{{ forra.dislivello|value_or_dashes }}</td>
             </tr>
             <tr>
               <td>Ampiezza bacino (km2)</td>
-              <td>{{ forra.ampiezza_bacino }}</td>
+              <td>{{ forra.ampiezza_bacino|value_or_dashes }}</td>
             </tr>
             <tr>
               <td>Origine acqua</td>
-              <td>{{ forra.origine_acqua }}</td>
+              <td>{{ forra.origine_acqua|value_or_dashes }}</td>
             </tr>
             <tr>
               <td>Opere idrauliche</td>
-              <td>{{ forra.opere_idrauliche }}</td>
+              <td>{{ forra.opere_idrauliche|value_or_dashes }}</td>
             </tr>
             <tr>
               <td>Litologia</td>
-              <td>{{ forra.litologia }}</td>
+              <td>{{ forra.litologia|value_or_dashes }}</td>
             </tr>
           </tbody>
         </table>
@@ -219,19 +219,19 @@
     <div class="row section pt-2" id="Informazioni">
       <div class="col-12">
         <h5>Presentazione forra</h5>
-        <p>{{ forra.presentazione_forra }}</p>
+        <p>{{ forra.presentazione_forra|value_or_noinfo }}</p>
         <h5>Vincoli ambientali</h5>
-        <p>{{ forra.vincoli_ambientali }}</p>
+        <p>{{ forra.vincoli_ambientali|value_or_noinfo }}</p>
         <h5>Descrizione accesso a valle</h5>
-        <p>{{ forra.descr_accesso_valle }}</p>
+        <p>{{ forra.descr_accesso_valle|value_or_noinfo }}</p>
         <h5>Descrizione accesso a monte</h5>
-        <p>{{ forra.descr_accesso_monte }}</p>
+        <p>{{ forra.descr_accesso_monte|value_or_noinfo }}</p>
         <h5>Descrizione avvicinamento</h5>
-        <p>{{ forra.descr_avvicinamento }}</p>
+        <p>{{ forra.descr_avvicinamento|value_or_noinfo }}</p>
         <h5>Descrizione percorso</h5>
-        <p>{{ forra.descr_percorso }}</p>
+        <p>{{ forra.descr_percorso|value_or_noinfo }}</p>
         <h5>Descrizione uscita</h5>
-        <p>{{ forra.descr_uscita }}</p>
+        <p>{{ forra.descr_uscita|value_or_noinfo }}</p>
       </div>
     </div>
 
@@ -241,7 +241,7 @@
         <h4 class="font-weigth-light">Profilo</h4>
         <img class="img-fluid" src="{{ MEDIA_URL }}{{ forra.profilo }}" width="50%">
         <h5>Note</h5>
-        <p>{{ forra.note }}</p>
+        <p>{{ forra.note|value_or_noinfo }}</p>
       </div>
     </div>
     {% else %}

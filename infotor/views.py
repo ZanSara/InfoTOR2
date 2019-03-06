@@ -131,7 +131,6 @@ def create_forra(id_forra):
     
     for forra in forre_esistenti:
         if int(forra['id']) == int(id_forra):
-            nuovaforra = Forra.objects.create(id=id_forra)
+            nuovaforra = Forra.objects.create(id=id_forra, nome=forra['nome'] )
             return Forra.objects.get(id=id_forra)
-    
     return None

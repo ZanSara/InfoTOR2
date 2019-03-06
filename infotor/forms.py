@@ -10,9 +10,9 @@ class ForraForm(forms.ModelForm):
             field = Forra._meta.get_field(name)
             max_val = 10 ** (field.max_digits - field.decimal_places) - 1
             if positive:
-                return forms.DecimalField(max_value=max_val, min_value=0, decimal_places=field.decimal_places)
+                return forms.DecimalField(max_value=max_val, min_value=0, decimal_places=field.decimal_places, required=False)
             else:
-                return forms.DecimalField(max_value=max_val, decimal_places=field.decimal_places)
+                return forms.DecimalField(max_value=max_val, decimal_places=field.decimal_places, required=False)
 
     numero_calate = Utils.generate_decimal_field('numero_calate')
     calata_massima = Utils.generate_decimal_field('calata_massima')

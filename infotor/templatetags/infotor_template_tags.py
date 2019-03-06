@@ -16,6 +16,8 @@ def render_sidebar_forra():
 
 @register.filter
 def as_time(value):
+    if value is None:
+        return "--:--"
     return str(value).replace('.', ':')
     
 @register.filter
@@ -27,3 +29,16 @@ def as_minutes(value):
 @register.filter
 def minus(value, arg):
     return int(value) - int(arg)
+    
+    
+@register.filter
+def value_or_dashes(value):
+    if value is None:
+        return "---"
+    return value
+    
+@register.filter
+def value_or_noinfo(value):
+    if value is None:
+        return "(Nessuna informazione)"
+    return value
