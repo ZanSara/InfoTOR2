@@ -27,9 +27,9 @@
               <tr>
                 <td><a href="{% url 'mostra_forra' forra.id %}">{{ forra.nome }}</a></td>
                 <td>{{ forra.quota_fine|minus:forra.quota_inizio }} m</td>
-                <td>{{ forra.tempo_andata|as_minutes }} h</td>
-                <td>{{ forra.ore_discesa }} h</td>
-                <td>{{ forra.tempo_ritorno|as_minutes }} h</td>
+                <td>{{ forra.tempo_andata|value_or_dashes_time }} h</td>
+                <td>{{ forra.ore_discesa|value_or_dashes_time }} h</td>
+                <td>{{ forra.tempo_ritorno|value_or_dashes_time }} h</td>
               </tr>
               {% endfor %}
             </tbody>

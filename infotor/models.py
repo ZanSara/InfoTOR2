@@ -3,7 +3,7 @@ from math import modf
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from infotor.validators import frac_min_validator
+from infotor.validators import frac_min_validator, timespan_validator
 
 PUNTEGGI = ((1, 1), (2, 2), (3, 3), (4, 4))
 LIVELLI = ((1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7))
@@ -12,7 +12,7 @@ class Forra(models.Model):
     id = models.IntegerField(verbose_name='Id Forra', db_column='NUME', primary_key=True)
 
     nome = models.CharField(verbose_name='Nome Forra', db_column='TREK1', max_length=80)
-    # id_percorso = models.ForeignKey('Percorso', verbose_name='Id Percorso', db_column='IDPERC')
+    id_percorso = models.IntegerField(verbose_name='Id Percorso', db_column='IDPERC') #models.ForeignKey('Percorso', verbose_name='Id Percorso', db_column='IDPERC')
     
     # TODO aggiungere i campi di collegamento che non mi sembrano tanto ok
     # id percorso
@@ -47,15 +47,15 @@ class Forra(models.Model):
     # TODO completare
     # quota partenza forra
     # quota arrivo forra
-    ore_avvicinamento = models.DecimalField(verbose_name='Ore Avvicinamento', db_column='HAVV',
-        max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator], null=True, blank=True)
-    ore_discesa = models.DecimalField(verbose_name='Ore Discesa', db_column='HCAL',
-        max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator], null=True, blank=True)
-    ore_rientro = models.DecimalField(verbose_name='Ore Rientro', db_column='HRIE',
-        max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator], null=True, blank=True)
+    
+    "C'e' gia' un TEMPO_ANDATA e TEMPO_RITORNO nei campi presi da Percorso. Per adesso uso quelli."
+    #ore_avvicinamento = models.DecimalField(verbose_name='Ore Avvicinamento', db_column='HAVV',
+    #    max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator], null=True, blank=True)
+    ore_discesa = models.CharField(verbose_name='Ore Discesa', db_column='HCAL', max_length=5, validators=[timespan_validator], null=True, blank=True)
+    #ore_rientro = models.DecimalField(verbose_name='Ore Rientro', db_column='HRIE',
+    #    max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator], null=True, blank=True)
 
-    minuti_navetta = models.DecimalField(verbose_name='Minuti Navetta', db_column='MMNAV',
-        max_digits=3, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
+    minuti_navetta = models.CharField(verbose_name='Minuti Navetta', validators=[timespan_validator], db_column='MMNAV', max_length=5, null=True, blank=True)
     km_navetta = models.DecimalField(verbose_name='Kilometri Navetta', db_column='KMNAV',
         max_digits=3, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
 
@@ -88,6 +88,40 @@ class Forra(models.Model):
     # --- Profilo forra ---
     profilo = models.ImageField(upload_to='profili/', verbose_name='Profilo Forra', db_column='PROFILO', null=True, blank=True)
     note = models.TextField(verbose_name='Note', db_column='NOTE', max_length=250, null=True, blank=True)
+    
+    
+    
+    # ----------------- CAMPI COPIATI DA PERCORSO ---------------------------
+    
+    percorribilita = models.ForeignKey('Condizioni', verbose_name='Percorribilità', db_column='PERCORR', null=True, blank=True)
+    descrizione = models.CharField(verbose_name='Descrizione', db_column='DENOMI', max_length=80, null=True, blank=True)
+
+    lunghezza_piana = models.DecimalField(verbose_name='Lunghezza Piana', db_column='PERLUN',
+        max_digits=5, decimal_places=0, null=True, blank=True)
+    lunghezza_inclinata = models.DecimalField(verbose_name='Lunghezza Inclinata', db_column='PERLUNF',
+        max_digits=5, decimal_places=0, null=True, blank=True)
+    quota_inizio = models.DecimalField(verbose_name='Quota Inizio', db_column='PERQUO1',
+        max_digits=4, decimal_places=0, null=True, blank=True)
+    quota_fine = models.DecimalField(verbose_name='Quota Fine', db_column='PERQUO2',
+        max_digits=4, decimal_places=0, null=True, blank=True)
+    pendenza = models.DecimalField(verbose_name='Pendenza', db_column='PENDENZA',
+        max_digits=5, decimal_places=2, null=True, blank=True)
+    tempo_andata = models.CharField(verbose_name='Tempo di percorrenza andata', db_column='PERTEM1', max_length=5, null=True, blank=True)
+    tempo_ritorno = models.CharField(verbose_name='Tempo di percorrenza ritorno', db_column='PERTEM2', max_length=5, null=True, blank=True)
+    difficolta = models.ForeignKey('Difficolta', verbose_name='Difficoltà', db_column='PERDIF', null=True, blank=True)
+    segnaletica = models.ForeignKey('Segnaletica', verbose_name='Segnaletica', db_column='SEGNI', null=True, blank=True)
+    data_aggiornamento = models.DateField(verbose_name='Data Aggiornamento', db_column='DATARIL', null=True, blank=True)
+    # rete_regionale = models.ForeignKey('Rete', db_column='RETEREG', null=True) # TODO metti la tabella corrispondente
+    codice_catasto = models.CharField(verbose_name='Codice Catasto Regionale', db_column='CODREG', max_length=12, null=True, blank=True)
+    operatore = models.CharField(verbose_name='Ente Manutentore', db_column='OPERATORE', max_length=80, null=True, blank=True)
+    #interesse_storico = models.ForeignKey('Valenza', db_column='STORICO', null=True) # TODO metti la tabella corrispondente
+    #interesse_architettonico = models.ForeignKey('Valenza', db_column='ARCHITETT', null=True)
+    #interesse_paesaggistico = models.ForeignKey('Valenza', db_column='PAESAGG', null=True)
+    #interesse_naturalistco = models.ForeignKey('Valenza', db_column='NATURAL', null=True)
+    link_CMS = models.CharField(verbose_name='Link CMS', db_column='LINK', max_length=16, null=True, blank=True)
+    aggiornatore = models.CharField(verbose_name='Aggiornatore', db_column='UTENTE', max_length=16, null=True, blank=True)
+    
+    
 
     class Meta:
         verbose_name_plural = 'Forre'
@@ -105,11 +139,17 @@ class Forra(models.Model):
         Forra._validate_non_negative(self.lunghezza_min_corda)
         Forra._validate_non_negative(self.numero_min_corde)
         Forra._validate_non_negative(self.ampiezza_bacino)
-        Forra._validate_non_negative(self.minuti_navetta)
+        #Forra._validate_non_negative(self.minuti_navetta)
         Forra._validate_non_negative(self.km_navetta)
-        Forra._validate_decimal_duration(self.ore_avvicinamento)
-        Forra._validate_decimal_duration(self.ore_discesa)
-        Forra._validate_decimal_duration(self.ore_rientro)
+        #Forra._validate_decimal_duration(self.ore_avvicinamento)
+        Forra._validate_minutes(self.tempo_andata)
+        Forra._validate_minutes(self.ore_discesa)
+        Forra._validate_minutes(self.tempo_ritorno)
+        Forra._validate_minutes(self.minuti_navetta)
+        #Forra._validate_decimal_duration(self.tempo_andata)
+        #Forra._validate_decimal_duration(self.ore_discesa)
+        #Forra._validate_decimal_duration(self.tempo_ritorno)
+        #Forra._validate_decimal_duration(self.ore_rientro)
         super(Forra, self).save(*args, **kwargs)
 
     @staticmethod
@@ -135,7 +175,25 @@ class Forra(models.Model):
         frac, _ = modf(value)
         if frac >= 0.60:
             raise ValueError('Fraction representing minutes cannot exceed 60')
-
+            
+    @staticmethod
+    def _validate_minutes(value):
+        if value is None or value == "":
+            return
+            
+        if value.count(":") != 1:
+            raise ValueError("Esprimere la durata in ore:minuti (per esempio, 01:20)")
+        hours, minutes = value.split(":")
+        if len(hours) <=0 or len(minutes) <=1:
+            raise ValueError("Esprimere la durata in ore:minuti (per esempio, 00:30)")
+        try:
+            hours = int(hours)
+            minutes = int(minutes)
+        except:
+            raise ValueError("Esprimere la durata in ore:minuti (per esempio, 01:15)")
+        if hours < 0 or minutes < 0 or minutes >= 60:
+            raise ValueError("Esprimere la durata in ore:minuti (per esempio, 02:05)")
+        
 
 #______________________________________________________________________________
 
@@ -164,10 +222,8 @@ class Tratta(models.Model):
     pendenza = models.DecimalField(verbose_name='Pendenza', db_column='PENDENZA',
         max_digits=5, decimal_places=2)
     # TODO controlla i seguenti NEWFIELD trovati nei dbf che suonano strani
-    tempo_andata = models.DecimalField(verbose_name='Tempo di percorrenza andata', db_column='NEWFIELD1',
-        max_digits=5, decimal_places=2)
-    tempo_ritorno = models.DecimalField(verbose_name='Tempo di percorrenza ritorno', db_column='NEWFIELD2',
-        max_digits=5, decimal_places=2)
+    tempo_andata = models.IntegerField(verbose_name='Tempo di percorrenza andata', db_column='NEWFIELD1')
+    tempo_ritorno = models.IntegerField(verbose_name='Tempo di percorrenza ritorno', db_column='NEWFIELD2')
 
     difficolta = models.ForeignKey('Difficolta', verbose_name='Difficoltà', db_column='PERDIF')
     segnaletica = models.ForeignKey('Segnaletica', verbose_name='Segnaletica', db_column='SEGNI')

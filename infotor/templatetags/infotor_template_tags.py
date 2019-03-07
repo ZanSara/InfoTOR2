@@ -22,6 +22,8 @@ def as_time(value):
     
 @register.filter
 def as_minutes(value):
+    if value is None:
+        return "--:--"
     minuti = int(value) % 60
     ore = int(int(value) / 60 )
     return "{}:{}".format(ore, minuti)
@@ -35,6 +37,12 @@ def minus(value, arg):
 def value_or_dashes(value):
     if value is None:
         return "---"
+    return value
+
+@register.filter
+def value_or_dashes_time(value):
+    if value is None:
+        return "--:--"
     return value
     
 @register.filter

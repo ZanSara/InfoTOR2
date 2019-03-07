@@ -23,8 +23,22 @@ PATH_TO_CON_DIF = "{}/{}".format(PATH_TO_DBF, 'con_dif.dbf')
 
 def index(request):
     "Renderizza la pagina principale contenente l'elenco delle forre"
-    forre = read_dbf(PATH_TO_SEN_PERC, [Forra, Percorso])
+    forre_dbf = read_dbf(PATH_TO_SEN_PERC, [Forra, Percorso])
+    forre = []
+    for forra in forre_dbf:
+        try:
+            forre.append( Forra.objects.get(id=int(forra["id"])) )
+        except Forra.DoesNotExist:
+            nuova_forra = create_forra(forra["id"])
+            if nuova_forra is not None:
+                forre.append(nuova_forra)    
+                
+    for forra in forre:
+        print("###############")
+        print(Forra.objects.filter(id=forra.id).values())
+       
     return render(request, 'infotor/index.html', {'forre' : forre})
+
 
 def mostra_forra(request, id_forra):
     "Renderizza la pagina per visualizzare i dati di una forra"
@@ -32,9 +46,7 @@ def mostra_forra(request, id_forra):
     try:
         forra = Forra.objects.get(id=id_forra)
     except Forra.DoesNotExist:
-        forra = create_forra(id_forra)
-        if forra == None:
-            raise Http404              
+        raise Http404              
     finally:
         punteggi = 'x' * len(PUNTEGGI)
         livelli = 'x' * len(LIVELLI)
@@ -47,6 +59,7 @@ def mostra_forra(request, id_forra):
 
     return render(request, 'infotor/forra.html', context_dict)
 
+
 def modifica_forra(request, id_forra):
     "Renderizza la pagina per modificare i dati di una forra"
 
@@ -57,7 +70,7 @@ def modifica_forra(request, id_forra):
         except Forra.DoesNotExist:
             forra = create_forra(id_forra)
             if forra == None:
-                raise Forra.DoesNotExist
+                raise Http404
         
         # se il form è stato compilato e inviato al server, processalo
         if request.method == 'POST':
@@ -83,7 +96,6 @@ def modifica_forra(request, id_forra):
 def read_dbf(path_to_dbf_file, models):
     dbf_fields = []
     fields_list = []
-    
     for model in models:
         fields_list += model._meta.get_fields()
     
@@ -96,13 +108,8 @@ def read_dbf(path_to_dbf_file, models):
             pass
 
     for filepath in [PATH_TO_SEN_TRT, PATH_TO_SEN_PERC]:
-        #print("## Scanning file ", filepath)
-        
         forre_list = []
         for forra_record in DBF(path_to_dbf_file):
-            
-            #print("     Record:", forra_record)
-            
             forra = defaultdict(dict)
             for field in dbf_fields:
                 key, value = field
@@ -110,7 +117,6 @@ def read_dbf(path_to_dbf_file, models):
                     forra[key] = forra_record[value]
                     if type(forra[key]) == type(""):
                         forra[key] = forra[key].strip()
-            
                 except KeyError as e:
                     pass
                     #print("[WARNING] forra[{}] not found in this record of {}. [KeyError: {}]".format(value, path_to_dbf_file, e) )
@@ -118,9 +124,7 @@ def read_dbf(path_to_dbf_file, models):
                 #except dbf.FieldMissingError:
                 #    print("[WARNING] forra[{}] not found in this record of {}.".format(value, path_to_dbf_file) )
                 #    forra[key] = ""
-            
             forre_list.append( forra )
-        
     print( json.dumps(forre_list, indent=4, default=str) )   
     return forre_list
     
@@ -131,6 +135,28 @@ def create_forra(id_forra):
     
     for forra in forre_esistenti:
         if int(forra['id']) == int(id_forra):
-            nuovaforra = Forra.objects.create(id=id_forra, nome=forra['nome'] )
+            print(forra)
+            
+            nuovaforra = Forra.objects.create(id=id_forra, 
+                nome=forra['nome'], 
+                id_percorso=forra['numero'],
+                quota_inizio = forra['quota_inizio'],
+                quota_fine = forra['quota_fine'],
+                tempo_andata = create_timestring(forra['tempo_andata']),
+                tempo_ritorno = create_timestring(forra['tempo_ritorno']) )
             return Forra.objects.get(id=id_forra)
     return None
+    
+    
+def create_timestring(value):
+    if value is None:
+        return None
+    try:
+        hours = int(value/60)
+        minutes = int(value%60)
+    except:
+        return None
+    return "{}:{}".format(hours, minutes) 
+    
+    
+

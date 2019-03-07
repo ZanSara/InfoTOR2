@@ -23,7 +23,7 @@
         <h6>ID<br>{{ forra.id }}</h6>
       </div>
       <div class="col-2 pt-2">
-        <h6>Percorso<br>COSA VA MESSO QUI?</h6>
+        <h6>Percorso<br>{{ forra.id_percorso }}</h6>
       </div>
       <div class="col-2 pt-2">
         <h6>Tratta<br>COSA VA MESSO QUI?</h6>
@@ -116,31 +116,31 @@
             <tbody>
               <tr>
                 <td>Quota partenza forra (slm)</td>
-                <td>{{ forra.quota_inizio|value_or_dashes }}</td>
+                <td>{{ forra.quota_inizio|value_or_dashes }} slm</td>
               </tr>
               <tr>
                 <td>Quota arrivo forra (slm)</td>
-                <td>{{ forra.quota_fine|value_or_dashes }}</td>
+                <td>{{ forra.quota_fine|value_or_dashes }} slm </td>
               </tr>
               <tr>
                 <td>Ore avvicinamento</td>
-                <td>{{ forra.ore_avvicinamento|as_time }}</td>
+                <td>{{ forra.tempo_andata|value_or_dashes_time}} h</td>
               </tr>
               <tr>
                 <td>Ore discesa</td>
-                <td>{{ forra.ore_discesa|as_time }}</td>
+                <td>{{ forra.ore_discesa|value_or_dashes_time }} h</td>
               </tr>
               <tr>
                 <td>Ore rientro</td>
-                <td>{{ forra.ore_rientro|as_time }}</td>
+                <td>{{ forra.tempo_ritorno|value_or_dashes_time }} h</td>
               </tr>
               <tr>
-                <td>Minuti navetta</td>
-                <td>{{ forra.minuti_navetta|value_or_dashes }}</td>
+                <td>Tempo navetta</td>
+                <td>{{ forra.minuti_navetta|value_or_dashes_time }} h</td>
               </tr>
               <tr>
                 <td>Kilometri navetta</td>
-                <td>{{ forra.km_navetta|value_or_dashes }}</td>
+                <td>{{ forra.km_navetta|value_or_dashes }} km</td>
               </tr>
             </tbody>
         </table>
@@ -161,15 +161,15 @@
               </tr>
               <tr>
                 <td>Calata massima (m)</td>
-                <td>{{ forra.calata_massima|value_or_dashes }}</td>
+                <td>{{ forra.calata_massima|value_or_dashes }} m</td>
               </tr>
               <tr>
                 <td>Lunghezza minima corda (m)</td>
-                <td>{{ forra.lunghezza_min_corda|value_or_dashes }}</td>
+                <td>{{ forra.lunghezza_min_corda|value_or_dashes }} m</td>
               </tr>
               <tr>
                 <td>Numero minimo di corde</td>
-                <td>{{ forra.numero_min_corde|value_or_dashes }}</td>
+                <td>{{ forra.numero_min_corde|value_or_dashes }} m</td>
               </tr>
             </tbody>
         </table>
@@ -180,11 +180,11 @@
           <tbody>
             <tr>
             <td>Dislivello (m)</td>
-            <td>{{ forra.dislivello|value_or_dashes }}</td>
+            <td>{{ forra.dislivello|value_or_dashes }} m</td>
             </tr>
             <tr>
               <td>Ampiezza bacino (km2)</td>
-              <td>{{ forra.ampiezza_bacino|value_or_dashes }}</td>
+              <td>{{ forra.ampiezza_bacino|value_or_dashes }} km2</td>
             </tr>
             <tr>
               <td>Origine acqua</td>

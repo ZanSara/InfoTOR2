@@ -13,6 +13,11 @@ class ForraForm(forms.ModelForm):
                 return forms.DecimalField(max_value=max_val, min_value=0, decimal_places=field.decimal_places, required=False)
             else:
                 return forms.DecimalField(max_value=max_val, decimal_places=field.decimal_places, required=False)
+          
+        #@staticmethod      
+        #def generate_time_field(name):
+        #    field = Forra._meta.get_field(name)
+            
 
     numero_calate = Utils.generate_decimal_field('numero_calate')
     calata_massima = Utils.generate_decimal_field('calata_massima')
@@ -20,9 +25,14 @@ class ForraForm(forms.ModelForm):
     numero_min_corde = Utils.generate_decimal_field('numero_min_corde')
     dislivello = Utils.generate_decimal_field('dislivello', False)
     ampiezza_bacino = Utils.generate_decimal_field('ampiezza_bacino')
-    minuti_navetta = Utils.generate_decimal_field('minuti_navetta')
     km_navetta = Utils.generate_decimal_field('km_navetta')
-    ore_avvicinamento = Utils.generate_decimal_field('ore_avvicinamento')
+    
+    #tempo_andata = Utils.generate_time_field('tempo_andata')
+    #ore_discesa = Utils.generate_time_field('ore_discesa')
+    #tempo_ritorno = Utils.generate_time_field('tempo_ritorno')
+    #minuti_navetta = Utils.generate_time_field('minuti_navetta')
+    
+    #ore_avvicinamento = Utils.generate_decimal_field('tempo_andata')
 
     class Meta:
         model = Forra
@@ -41,9 +51,9 @@ class ForraForm(forms.ModelForm):
             'dislivello',
             'ampiezza_bacino',
             'origine_acqua',
-            'ore_avvicinamento',
+            'tempo_andata', #'ore_avvicinamento',
             'ore_discesa',
-            'ore_rientro',
+            'tempo_ritorno', #'ore_rientro',
             'minuti_navetta',
             'km_navetta',
             'opere_idrauliche',
