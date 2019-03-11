@@ -10,7 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.fields.reverse_related import ManyToOneRel
 
 from infotor.models import Forra, Percorso, LIVELLI, PUNTEGGI
-from infotor.forms import ForraForm
+from infotor.forms import ForraForm, CheckpointForm
 
 
 # TODO aggiungi pagine custom 500 e 404
@@ -33,9 +33,9 @@ def index(request):
             if nuova_forra is not None:
                 forre.append(nuova_forra)    
                 
-    for forra in forre:
-        print("###############")
-        print(Forra.objects.filter(id=forra.id).values())
+    #for forra in forre:
+        #print("###############")
+        #print(Forra.objects.filter(id=forra.id).values())
        
     return render(request, 'infotor/index.html', {'forre' : forre})
 
@@ -62,32 +62,45 @@ def mostra_forra(request, id_forra):
 
 def modifica_forra(request, id_forra):
     "Renderizza la pagina per modificare i dati di una forra"
-
     try:
         try:
             # fetch della forra dal db in base all'index. Può fallire
             forra = Forra.objects.get(id=id_forra)
         except Forra.DoesNotExist:
-            forra = create_forra(id_forra)
-            if forra == None:
-                raise Http404
-        
+            raise Http404
         # se il form è stato compilato e inviato al server, processalo
         if request.method == 'POST':
             form = ForraForm(data=request.POST, files=request.FILES, instance=forra)
+            checkpoint1_form = CheckpointForm(prefix='checkpoint1', data=request.POST, files=request.FILES, instance=forra.checkpoint1)
+            checkpoint2_form = CheckpointForm(prefix='checkpoint2',data=request.POST, files=request.FILES, instance=forra.checkpoint2)
+            
+            print(json.dumps(request.POST, indent=4))
+            
             # se il form è valido, salvalo e mostra la forra modificata
-            if form.is_valid():
+            if form.is_valid() and checkpoint1_form.is_valid() and checkpoint2_form.is_valid():
                 form.save(commit=True)
+                nuovaforra = Forra.objects.get(id=id_forra)
+                nuovaforra.checkpoint1 = checkpoint1_form.save(commit=True)
+                nuovaforra.checkpoint2 = checkpoint2_form.save(commit=True)
+                nuovaforra.save()
+                
                 return mostra_forra(request, id_forra)
-
         # se non è POST, allora l'utente vuole modificare la forra
         else:
             form = ForraForm(instance=forra)
+            checkpoint1_form = CheckpointForm(prefix='checkpoint1', instance=forra.checkpoint1)
+            checkpoint2_form = CheckpointForm(prefix='checkpoint2', instance=forra.checkpoint2)
 
     except Forra.DoesNotExist:
         form = None
+        checkpoint1_form = None
+        checkpoint2_form = None
 
-    return render(request, 'infotor/modifica_forra.html', {'form' : form, 'forra' : forra})
+    return render(request, 'infotor/modifica_forra.html', { 'form' : form, 
+                                                            'forra' : forra, 
+                                                            'checkpoint1_form': checkpoint1_form, 
+                                                            'checkpoint2_form': checkpoint2_form
+                                                          })
     
     
     
@@ -125,7 +138,7 @@ def read_dbf(path_to_dbf_file, models):
                 #    print("[WARNING] forra[{}] not found in this record of {}.".format(value, path_to_dbf_file) )
                 #    forra[key] = ""
             forre_list.append( forra )
-    print( json.dumps(forre_list, indent=4, default=str) )   
+    #print( json.dumps(forre_list, indent=4, default=str) )   
     return forre_list
     
 
@@ -135,7 +148,7 @@ def create_forra(id_forra):
     
     for forra in forre_esistenti:
         if int(forra['id']) == int(id_forra):
-            print(forra)
+            #print(forra)
             
             nuovaforra = Forra.objects.create(id=id_forra, 
                 nome=forra['nome'], 
@@ -152,11 +165,19 @@ def create_timestring(value):
     if value is None:
         return None
     try:
-        hours = int(value/60)
-        minutes = int(value%60)
+        hours_int = int(value/60)
+        minutes_int = int(value%60)
+        if hours_int < 10:
+            hours = "0{}".format(hours_int)
+        else:
+            hours = "{}".format(hours_int)
+        if minutes_int < 10:
+            minutes = "0{}".format(minutes_int)
+        else:
+            minutes = "{}".format(minutes_int)
     except:
         return None
-    return "{}:{}".format(hours, minutes) 
+    return "{}:{}".format(hours, minutes)
     
     
 

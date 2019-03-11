@@ -86,7 +86,8 @@ class Forra(models.Model):
         max_length=250, null=True, blank=True)
 
     # --- Profilo forra ---
-    profilo = models.ImageField(upload_to='profili/', verbose_name='Profilo Forra', db_column='PROFILO', null=True, blank=True)
+    profilo = models.ImageField(upload_to='profili/', verbose_name='Profilo Forra', db_column='PROFILO', 
+        null=True, blank=True)
     note = models.TextField(verbose_name='Note', db_column='NOTE', max_length=250, null=True, blank=True)
     
     
@@ -297,6 +298,16 @@ class PercorsoTratta(models.Model):
 
 #______________________________________________________________________________
 
+class Checkpoint(models.Model):
+    codice = models.AutoField(verbose_name='Codice', db_column='CODICE', primary_key=True)
+    descrizione = models.TextField(verbose_name='Descrizione', db_column='DESCRIZION', max_length=250, blank=True, null=True)
+    immagine = models.ImageField(upload_to='checkpoints/', verbose_name='Immagine', db_column='IMMAGINE', blank=True, null=True)
+
+    def __str__(self):
+        return str(self.immagine)
+        
+#______________________________________________________________________________
+
 class Tipologia(models.Model):
     codice = models.CharField(verbose_name='Codice', db_column='CODICE', max_length=3, primary_key=True)
     descrizione = models.CharField(verbose_name='Descrizione', db_column='DESCRIZION', max_length=50)
@@ -422,16 +433,3 @@ class Mese(models.Model):
 
     def __str__(self):
         return self.mese
-
-#______________________________________________________________________________
-
-class Checkpoint(models.Model):
-    codice = models.DecimalField(verbose_name='Codice', db_column='CODICE', primary_key=True,
-        max_digits=5, decimal_places=0)
-    descrizione = models.TextField(verbose_name='Descrizione', db_column='DESCRIZION', max_length=250, null=True)
-    immagine = models.ImageField(upload_to='checkpoints/', verbose_name='Immagine', db_column='IMMAGINE')
-
-
-
-    def __str__(self):
-        return str(self.immagine)

@@ -47,6 +47,21 @@ def value_or_dashes_time(value):
     
 @register.filter
 def value_or_noinfo(value):
-    if value is None:
+    if value is None or value.strip() == "":
         return "(Nessuna informazione)"
     return value
+    
+@register.filter
+def pic_or_nockpoint(value):
+    if value is None or str(value) == '':
+        return "checkpoints/no-checkpoint.png"
+    return "{}".format(value)
+    
+    
+@register.filter
+def pic_or_noprofilo(value):
+    if value is None or str(value) == '':
+        return "profili/no-profilo.png"
+    return "{}".format(value)
+    
+ 

@@ -1,5 +1,15 @@
 from django import forms
-from infotor.models import Forra
+from infotor.models import Forra, Checkpoint
+
+class CheckpointForm(forms.ModelForm):
+    
+    class Meta:
+        model = Checkpoint
+        fields = [
+            'immagine',
+            'descrizione'
+        ]
+        
 
 class ForraForm(forms.ModelForm):
 
@@ -75,3 +85,36 @@ class ForraForm(forms.ModelForm):
         widgets = {
             'stagionalita': forms.CheckboxSelectMultiple,
         }
+    
+    def clean_tempo_andata(self):
+        return self.clean_minutes(self.cleaned_data['tempo_andata'])
+    def clean_ore_discesa(self):
+        return self.clean_minutes(self.cleaned_data['ore_discesa'])
+    def clean_tempo_ritorno(self):
+        return self.clean_minutes(self.cleaned_data['tempo_ritorno'])
+    def clean_minuti_navetta(self):
+        return self.clean_minutes(self.cleaned_data['minuti_navetta'])
+    
+    def clean_minutes(self, value_to_clean):
+        if value_to_clean is None:
+            print("D")
+            return None
+        #try:
+        hours, minutes = value_to_clean.split(":")
+        if len(hours) > 2 or len(hours) < 1:
+            print("A")
+            return None
+        else:
+            if len(hours) == 1:
+                hours = "0{}".format(hours)
+        if len(minutes) > 2 or len(minutes) < 1:
+            print("B")
+            return None
+        else:
+            if len(minutes) == 1:
+                minutes = "{}0".format(minutes)
+        return "{}:{}".format(hours, minutes)
+        #except:
+        #    print("C")
+        #    return None
+        return None
