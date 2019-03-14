@@ -5,7 +5,6 @@
 *.pyc
 __pycache__/
 local_settings.py
-*.sqlite3
 
 # Data files given by CAI
 data/

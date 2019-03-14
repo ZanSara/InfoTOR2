@@ -16,5 +16,51 @@ def render_sidebar_forra():
 
 @register.filter
 def as_time(value):
+    if value is None:
+        return "--:--"
     return str(value).replace('.', ':')
+
+@register.filter
+def as_minutes(value):
+    if value is None:
+        return "--:--"
+    minuti = int(value) % 60
+    ore = int(int(value) / 60 )
+    return "{}:{}".format(ore, minuti)
+    
+@register.filter
+def minus(value, arg):
+    return int(value) - int(arg)
+    
+    
+@register.filter
+def value_or_dashes(value):
+    if value is None:
+        return "---"
+    return value
+
+@register.filter
+def value_or_dashes_time(value):
+    if value is None:
+        return "--:--"
+    return value
+    
+@register.filter
+def value_or_noinfo(value):
+    if value is None or value.strip() == "":
+        return "(Nessuna informazione)"
+    return value
+    
+@register.filter
+def pic_or_nockpoint(value):
+    if value is None or str(value) == '':
+        return "checkpoints/no-checkpoint.png"
+    return "{}".format(value)
+    
+    
+@register.filter
+def pic_or_noprofilo(value):
+    if value is None or str(value) == '':
+        return "profili/no-profilo.png"
+    return "{}".format(value)
     

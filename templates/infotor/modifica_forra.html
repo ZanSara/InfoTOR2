@@ -31,6 +31,7 @@
     {#% if form %#}
       {% if form.errors %}
         {% bootstrap_alert "Controllare che tutti i campi siano corretti" alert_type="danger"%}
+        {{ form.errors }}
       {% endif %}
     {% language 'it' %}
     <form action="." method="POST" id="ForraForm" onsubmit="return confirm('Salvare la Forra?')" enctype="multipart/form-data">
@@ -41,8 +42,16 @@
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-2">
-            <h5 class="pb-0">Id:</h5>
-            <h5 class="pb-0">{{ forra.numero }}</h5>
+            <div class="pb-0">
+                <label class="h5" for="id_id">Id Forra</label>
+                <input type="number" name="id" value="{{ forra.id }}" class="form-control" title="" required="" id="id_id" readonly>
+            </div>
+        </div>
+         <div class="col-md-2">
+            <div class="pb-0">
+                <label class="h5" for="id_percorso">Id Percorso</label>
+                <input type="number" name="id_percorso" value="{{ forra.id_percorso }}" class="form-control" title="" required="" id="id_percorso" readonly>
+            </div>
         </div>
         <div class="ml-auto">
           <button class="btn btn-success btn-sm ml-auto" type="submit">
@@ -50,7 +59,7 @@
           </button>
           <a class="btn btn-danger btn-sm ml-auto"
             {% if forra %}
-            href="/infotor/forra/{{ forra.numero }}"
+            href="/infotor/forra/{{ forra.id }}"
             {% else %}
             href="/infotor/"
             {% endif %}
@@ -72,11 +81,10 @@
           {% bootstrap_field form.bellezza layout='horizontal' size='small' form_group_class='pb-0' %}
           {% bootstrap_field form.divertimento layout='horizontal' size='small' form_group_class='pb-0' %}
           <br>
-          <!-- TODO vedi di renderizzare meglio questi 3 campi di durata -->
-          {% bootstrap_field form.ore_avvicinamento layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh,mm' %}
-          {% bootstrap_field form.ore_discesa layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh,mm' %}
-          {% bootstrap_field form.ore_rientro layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh,mm' %}
-          {% bootstrap_field form.minuti_navetta layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.tempo_andata layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm' %}
+          {% bootstrap_field form.ore_discesa layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm' %}
+          {% bootstrap_field form.tempo_ritorno layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm' %}
+          {% bootstrap_field form.minuti_navetta layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm'%}
           {% bootstrap_field form.km_navetta layout='horizontal' size='small' form_group_class='pb-0' %}
         </div>
         <div class="col-md-5 px-3">
@@ -96,8 +104,10 @@
 
       <div class="row section" id="Checkpoints">
         <div class="form-group col-md-8">
-            {% bootstrap_field form.checkpoint1 label_class='h6' %}
-            {% bootstrap_field form.checkpoint2 label_class='h6' %}
+            {% bootstrap_field checkpoint1_form.immagine label_class='h6' %}
+            {% bootstrap_field checkpoint1_form.descrizione label_class='h6' %}
+            {% bootstrap_field checkpoint2_form.immagine label_class='h6' %}
+            {% bootstrap_field checkpoint2_form.descrizione label_class='h6' %}
         </div>
       </div>
 
