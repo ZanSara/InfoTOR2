@@ -25,7 +25,7 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'uaf54$woo%@m($i9skib5f9=clk4=aijfm8e81cbyyr7!lx@@y')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', "thisiisjustafakesecretkeyyoufool")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
@@ -33,7 +33,7 @@ DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'infotor.herokuapp.com',
+    '80.211.239.107',
 ]
 
 
