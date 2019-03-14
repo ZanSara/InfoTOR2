@@ -1,0 +1,90 @@
+{% extends 'infotor/base.html' %}
+{% load infotor_template_tags %}
+{% load static %}
+
+{% block main %}
+<div class="container-fluid">
+  <div class="row">
+
+    {% render_sidebar %}
+
+    <main role="main" class="col-md-10 ml-auto col-lg-10 px-4" style="padding-top:70px">
+      <div id="map" style="width:80vw; height:90vh;"></div>
+        <script src="{% static "OpenLayers-2.13.1/OpenLayers.js" %}"></script>
+        <script>
+            var lon = 1200000;
+            var lat = 5700000;
+            var zoom = 7;
+            var map, layer;
+        
+            map = new OpenLayers.Map("map");
+            map.addLayer(new OpenLayers.Layer.OSM());
+            //map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+            map.zoomToMaxExtent();
+            
+            
+            map.addLayer(new OpenLayers.Layer.Vector("GML", {
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: "{% static 'gml/torrenti.gml' %}",
+                    format: new OpenLayers.Format.GML()
+                }),
+                strategies: [new OpenLayers.Strategy.Fixed()]
+            }));
+            
+            
+        </script>  
+      <!--script type="text/javascript">
+        var lon = 5;
+        var lat = 40;
+        var zoom = 5;
+        var map, layer;
+
+        function init(){
+            map = new OpenLayers.Map( 'map' );
+            layer = new OpenLayers.Layer.OSM();
+            map.addLayer(layer);
+            map.zoomToMaxExtent();
+            map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+            var featurecollection = {
+              "type": "FeatureCollection", 
+              "features": [
+                {"geometry": {
+                    "type": "GeometryCollection", 
+                    "geometries": [
+                        {
+                            "type": "LineString", 
+                            "coordinates": 
+                                [[11.0878902207, 45.1602390564], 
+                                [15.01953125, 48.1298828125]]
+                        }, 
+                        {
+                            "type": "Polygon", 
+                            "coordinates": 
+                                [[[11.0878902207, 45.1602390564], 
+                                  [14.931640625, 40.9228515625], 
+                                  [0.8251953125, 41.0986328125], 
+                                  [7.63671875, 48.96484375], 
+                                  [11.0878902207, 45.1602390564]]]
+                        },
+                        {
+                            "type":"Point", 
+                            "coordinates":[15.87646484375, 44.1748046875]
+                        }
+                    ]
+                }, 
+                "type": "Feature", 
+                "properties": {}}
+              ]
+           };
+           var geojson_format = new OpenLayers.Format.GeoJSON();
+           var vector_layer = new OpenLayers.Layer.Vector(); 
+           map.addLayer(vector_layer);
+           vector_layer.addFeatures(geojson_format.read(featurecollection));
+
+        }
+    </script-->
+      
+    </main>
+  </div>
+</div>
+{% endblock %}

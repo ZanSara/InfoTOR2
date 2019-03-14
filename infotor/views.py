@@ -3,11 +3,13 @@
 import os, json
 from collections import defaultdict
 from dbfread import DBF
+import gdaltools
 
 from django.http import Http404
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.fields.reverse_related import ManyToOneRel
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 from infotor.models import Forra, Percorso, LIVELLI, PUNTEGGI
 from infotor.forms import ForraForm, CheckpointForm
@@ -15,10 +17,9 @@ from infotor.forms import ForraForm, CheckpointForm
 
 # TODO aggiungi pagine custom 500 e 404
 
-PATH_TO_DBF = "{}/{}".format(os.path.dirname(os.path.realpath(__file__)), 'dbf')
-PATH_TO_SEN_TRT = "{}/{}".format(PATH_TO_DBF, 'sen_trt.dbf')
-PATH_TO_SEN_PERC = "{}/{}".format(PATH_TO_DBF, 'sen_perc.dbf')
-PATH_TO_CON_DIF = "{}/{}".format(PATH_TO_DBF, 'con_dif.dbf')
+PATH_TO_SEN_TRT = staticfiles_storage.path('dbf/sen_trt.dbf')
+PATH_TO_SEN_PERC = staticfiles_storage.path('dbf/sen_perc.dbf')
+PATH_TO_CON_DIF = staticfiles_storage.path('dbf/con_dif.dbf')
 
 
 def index(request):
@@ -31,13 +32,19 @@ def index(request):
         except Forra.DoesNotExist:
             nuova_forra = create_forra(forra["id"])
             if nuova_forra is not None:
-                forre.append(nuova_forra)    
-                
-    #for forra in forre:
-        #print("###############")
-        #print(Forra.objects.filter(id=forra.id).values())
-       
+                forre.append(nuova_forra)
     return render(request, 'infotor/index.html', {'forre' : forre})
+    
+def mappa(request):
+
+    ogr = gdaltools.ogr2ogr()
+    ogr.set_encoding("UTF-8")
+    ogr.set_input(staticfiles_storage.path('dbf/sen_trt.shp'))
+    ogr.set_output(staticfiles_storage.path('gml/torrenti.gml'))
+    ogr.execute()
+
+    return render(request, 'infotor/mappa.html')
+
 
 
 def mostra_forra(request, id_forra):
