@@ -15,7 +15,39 @@
     {% render_sidebar %}
 
     <main role="main" class="col-md-10 ml-auto col-lg-10 px-4" style="padding-top:70px">
-      <div id="map" style="width:80vw; height:90vh;"></div>
+      <!--div id="map" style="width:80vw; height:90vh;"></div>
+      
+      <script src="{% static "OpenLayers-2.13.1/OpenLayers.js" %}"></script>
+        <script>
+            var lon = 1200000;
+            var lat = 5700000;
+            var zoom = 7;
+            var map, layer;
+        
+            map = new OpenLayers.Map("map");
+            map.addLayer(new OpenLayers.Layer.OSM());
+            map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+            //map.zoomToMaxExtent();
+            
+            
+            map.addLayer(new OpenLayers.Layer.Vector("KML", {
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: "{% static 'kml/torrenti.kml' %}",
+                    format: new OpenLayers.Format.GML()
+                }),
+                strategies: [new OpenLayers.Strategy.Fixed()]
+            }));
+            
+            
+        </script-->
+        
+        <!--iframe style="width:80vw; height:90vh;" frameBorder="0" allowfullscreen src="https://umap.openstreetmap.fr/en/map/torrenti_304838?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=undefined&captionBar=false"></iframe-->
+        <iframe style="width:80vw; height:90vh;" frameBorder="0" allowfullscreen src="https://umap.openstreetmap.fr/en/map/torrenti_304838?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=undefined&captionBar=false&datalayers=803429%2C803483#11/46.6268/511930.7309"></iframe>
+        
+        <p>
+            <a href="https://umap.openstreetmap.fr/en/map/torrenti_304838">See full screen</a>
+        </p>  
+      
       
     <!--script>
       import Feature from 'ol/Feature.js';

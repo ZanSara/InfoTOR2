@@ -41,7 +41,7 @@ def mappa(request):
     ogr = gdaltools.ogr2ogr()
     ogr.set_encoding("UTF-8")
     ogr.set_input(staticfiles_storage.path('dbf/sen_trt.shp'))
-    ogr.set_output(staticfiles_storage.path('gml/torrenti.gml'))
+    ogr.set_output(staticfiles_storage.path('geojson/torrenti.json'))
     ogr.execute()
 
     return render(request, 'infotor/mappa.html')
