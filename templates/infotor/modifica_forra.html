@@ -76,29 +76,29 @@
           {% bootstrap_field form.stagionalita label_class='h6'%}
         </div>
         <div class="col-md-5 px-3">
-          {% bootstrap_field form.verticalita layout='horizontal' size='small' form_group_class='pb-0' %}
-          {% bootstrap_field form.acquaticita layout='horizontal' size='small' form_group_class='pb-0'%}
-          {% bootstrap_field form.bellezza layout='horizontal' size='small' form_group_class='pb-0' %}
-          {% bootstrap_field form.divertimento layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.verticalita layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'> </div>" %}
+          {% bootstrap_field form.acquaticita layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'> </div>" %}
+          {% bootstrap_field form.bellezza layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'> </div>"  %}
+          {% bootstrap_field form.divertimento layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'> </div>" %}
           <br>
-          {% bootstrap_field form.tempo_andata layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm' %}
-          {% bootstrap_field form.ore_discesa layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm' %}
-          {% bootstrap_field form.tempo_ritorno layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm' %}
-          {% bootstrap_field form.minuti_navetta layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm'%}
-          {% bootstrap_field form.km_navetta layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.tempo_andata layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm' addon_after="<div class='col-md-1'>h</div>" %}
+          {% bootstrap_field form.ore_discesa layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm' addon_after="<div class='col-md-1'>h</div>" %}
+          {% bootstrap_field form.tempo_ritorno layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm' addon_after="<div class='col-md-1'>h</div>" %}
+          {% bootstrap_field form.minuti_navetta layout='horizontal' size='small' form_group_class='pb-0' placeholder='hh:mm' addon_after="<div class='col-md-1'>h</div>" %}
+          {% bootstrap_field form.km_navetta layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'>km</div>" %}
         </div>
         <div class="col-md-5 px-3">
-          {% bootstrap_field form.grado_impegno layout='horizontal' size='small' form_group_class='pb-0' %}
-          {% bootstrap_field form.numero_calate layout='horizontal' size='small' form_group_class='pb-0' %}
-          {% bootstrap_field form.calata_massima layout='horizontal' size='small' form_group_class='pb-0' %}
-          {% bootstrap_field form.lunghezza_min_corda layout='horizontal' size='small' form_group_class='pb-0' %}
-          {% bootstrap_field form.numero_min_corde layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.grado_impegno layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'> </div>" %}
+          {% bootstrap_field form.numero_calate layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'> </div>" %}
+          {% bootstrap_field form.calata_massima layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'>m</div>" %}
+          {% bootstrap_field form.lunghezza_min_corda layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'>m</div>" %}
+          {% bootstrap_field form.numero_min_corde layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'> </div>" %}
           <br>
-          {% bootstrap_field form.dislivello layout='horizontal' size='small' form_group_class='pb-0' %}
-          {% bootstrap_field form.ampiezza_bacino layout='horizontal' size='small' form_group_class='pb-0' %}
-          {% bootstrap_field form.origine_acqua layout='horizontal' size='small' form_group_class='pb-0' %}
-          {% bootstrap_field form.opere_idrauliche layout='horizontal' size='small' form_group_class='pb-0' %}
-          {% bootstrap_field form.litologia layout='horizontal' size='small' form_group_class='pb-0' %}
+          {% bootstrap_field form.dislivello layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'>m</div>"  %}
+          {% bootstrap_field form.ampiezza_bacino layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'>km2</div>" %}
+          {% bootstrap_field form.origine_acqua layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'> </div>" %}
+          {% bootstrap_field form.opere_idrauliche layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'> </div>" %}
+          {% bootstrap_field form.litologia layout='horizontal' size='small' form_group_class='pb-0' addon_after="<div class='col-md-1'> </div>" %}
         </div>
       </div>
 

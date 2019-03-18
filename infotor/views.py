@@ -58,7 +58,11 @@ def mostra_forra(request, id_forra):
     finally:
         punteggi = 'x' * len(PUNTEGGI)
         livelli = 'x' * len(LIVELLI)
-
+        
+        print(type(forra))
+        
+        forra = forra.__dict__
+        
         context_dict = {
             'forra' : forra,
             'punteggi' : punteggi,

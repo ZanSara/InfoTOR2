@@ -11,7 +11,6 @@ LIVELLI = ((1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7))
 class Forra(models.Model):
 
     id = models.IntegerField(verbose_name='Id Forra', db_column='NUME', primary_key=True)
-
     nome = models.CharField(verbose_name='Nome Forra', db_column='TREK1', max_length=80)
     id_percorso = models.IntegerField(verbose_name='Id Percorso', db_column='IDPERC') #models.ForeignKey('Percorso', verbose_name='Id Percorso', db_column='IDPERC')
     
@@ -33,9 +32,9 @@ class Forra(models.Model):
 
     numero_calate = models.DecimalField(verbose_name='Numero Calate', db_column='NUMC',
         max_digits=1, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
-    calata_massima = models.DecimalField(verbose_name='Calata Massima', db_column='CALMAX',
+    calata_massima = models.DecimalField(verbose_name='Calata Massima (m)', db_column='CALMAX',
         max_digits=1, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
-    lunghezza_min_corda = models.DecimalField(verbose_name='Lunghezza minima corda singola', db_column='CORMIN',
+    lunghezza_min_corda = models.DecimalField(verbose_name='Lunghezza minima corda singola (m)', db_column='CORMIN',
         max_digits=2, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
     numero_min_corde = models.DecimalField(verbose_name='Numero minimo di corde', db_column='MINCORDE',
         max_digits=1, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
@@ -56,7 +55,7 @@ class Forra(models.Model):
     #ore_rientro = models.DecimalField(verbose_name='Ore Rientro', db_column='HRIE',
     #    max_digits=5, decimal_places=2, validators=[MinValueValidator(0), frac_min_validator], null=True, blank=True)
 
-    minuti_navetta = models.CharField(verbose_name='Minuti Navetta', validators=[timespan_validator], db_column='MMNAV', max_length=5, null=True, blank=True)
+    minuti_navetta = models.CharField(verbose_name='Tempo Navetta', validators=[timespan_validator], db_column='MMNAV', max_length=5, null=True, blank=True)
     km_navetta = models.DecimalField(verbose_name='Kilometri Navetta', db_column='KMNAV',
         max_digits=3, decimal_places=0, validators=[MinValueValidator(0)], null=True, blank=True)
 
@@ -98,15 +97,15 @@ class Forra(models.Model):
     percorribilita = models.ForeignKey('Condizioni', verbose_name='Percorribilità', db_column='PERCORR', null=True, blank=True)
     descrizione = models.CharField(verbose_name='Descrizione', db_column='DENOMI', max_length=80, null=True, blank=True)
 
-    lunghezza_piana = models.DecimalField(verbose_name='Lunghezza Piana', db_column='PERLUN',
+    lunghezza_piana = models.DecimalField(verbose_name='Lunghezza Piana (km)', db_column='PERLUN',
         max_digits=5, decimal_places=0, null=True, blank=True)
-    lunghezza_inclinata = models.DecimalField(verbose_name='Lunghezza Inclinata', db_column='PERLUNF',
+    lunghezza_inclinata = models.DecimalField(verbose_name='Lunghezza Inclinata (km)', db_column='PERLUNF',
         max_digits=5, decimal_places=0, null=True, blank=True)
-    quota_inizio = models.DecimalField(verbose_name='Quota Inizio', db_column='PERQUO1',
+    quota_inizio = models.DecimalField(verbose_name='Quota Inizio (slm)', db_column='PERQUO1',
         max_digits=4, decimal_places=0, null=True, blank=True)
-    quota_fine = models.DecimalField(verbose_name='Quota Fine', db_column='PERQUO2',
+    quota_fine = models.DecimalField(verbose_name='Quota Fine (slm)', db_column='PERQUO2',
         max_digits=4, decimal_places=0, null=True, blank=True)
-    pendenza = models.DecimalField(verbose_name='Pendenza', db_column='PENDENZA',
+    pendenza = models.DecimalField(verbose_name='Pendenza (%)', db_column='PENDENZA',
         max_digits=5, decimal_places=2, null=True, blank=True)
     tempo_andata = models.CharField(verbose_name='Tempo di percorrenza andata', db_column='PERTEM1', max_length=5, null=True, blank=True)
     tempo_ritorno = models.CharField(verbose_name='Tempo di percorrenza ritorno', db_column='PERTEM2', max_length=5, null=True, blank=True)
