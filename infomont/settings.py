@@ -28,7 +28,7 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', "thisiisjustafakesecretkeyyoufool")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', ""))
 # Note: It would be more intuitive if we could just set and unset the DJANGO_DEBUG environment variable to True and False directly, rather than using "any string" or "empty string" (respectively). Unfortunately environment variable values are stored as Python strings, and the only string that evaluates as False is the empty string (e.g. bool('')==False).
 
 ALLOWED_HOSTS = [

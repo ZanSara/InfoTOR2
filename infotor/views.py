@@ -8,7 +8,8 @@ from dbfread import DBF
 import gdaltools
 
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
+from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.fields.reverse_related import ManyToOneRel
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -112,6 +113,19 @@ def modifica_forra(request, id_forra):
     
     
     
+def handler404(request, *args, **argv):
+    response = render_to_response('404.html', {})
+    response.status_code = 404
+    return response
+
+
+def handler500(request, *args, **argv):
+    response = render_to_response('500.html', {})
+    response.status_code = 500
+    return response
+   
+   
+   
     
     
 def read_dbf(path_to_dbf_file, models):

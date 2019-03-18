@@ -1,0 +1,22 @@
+{% extends 'infotor/base.html' %}
+{% load infotor_template_tags %}
+{% load static %}
+
+
+{% block main %}
+<div class="container-fluid">
+  <div class="row">
+
+    {% render_sidebar %}
+
+    <main role="main" class="col-md-10 ml-auto col-lg-10 px-4" style="padding-top:100px">
+        
+        <h1 class="text-center">500 - Errore interno </h1>
+        <p class="text-center">Qualcosa e' andato storto nel caricare la pagina!<br>
+        Per favore contatta il responsabile del sito, in modo che possa investigare.</p>
+        
+    </main>
+
+  </div>
+</div>
+{% endblock %}
