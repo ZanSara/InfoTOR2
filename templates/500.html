@@ -1,0 +1,22 @@
+{% extends 'infotor/base.html' %}
+{% load infotor_template_tags %}
+{% load staticfiles %}
+
+{% block main %}
+<div class="container-fluid">
+  <div class="row">
+
+    {% render_sidebar %}
+
+    <main role="main" class="col-md-10 ml-auto col-lg-10 px-4" style="padding-top:110px">
+      
+      <h1 class="text-centered">500 - Errore interno</h1>
+      <p  class="text-centered">
+        Si e' verificato un errore interno.<br>
+        Per favore contatta il responsabile del sito per spiegargli come si e' verificato questo errore.
+      </p>
+      
+    </main>
+  </div>
+</div>
+{% endblock %}

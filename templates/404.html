@@ -1,0 +1,23 @@
+{% extends 'infotor/base.html' %}
+{% load infotor_template_tags %}
+{% load staticfiles %}
+
+{% block main %}
+<div class="container-fluid">
+  <div class="row">
+
+    {% render_sidebar %}
+
+    <main role="main" class="col-md-10 ml-auto col-lg-10 px-4" style="padding-top:110px">
+      
+      <h1 class="text-centered">404 - Pagina non trovata</h1>
+      <p  class="text-centered">
+        La pagina che stai cercando non esiste su questo sito.<br>
+        Se sei arrivato qui seguendo un link, contatta il responsabile del sito da cui sei arrivato, in modo che
+        possa aggiornarlo.
+      </p>
+      
+    </main>
+  </div>
+</div>
+{% endblock %}
