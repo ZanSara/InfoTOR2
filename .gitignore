@@ -7,17 +7,24 @@ __pycache__/
 local_settings.py
 db.sqlite3
 
-# Data files given by CAI
-data/
-infomont/media/
+## Staticfiles stuff
+staticfiles/**/*
+
+!.gitkeep
+!*.dbf
+!.shp
+!.shx
+!.sbn
+!.sbx
+!*/
+# This last thing ensures that all the negated patterns are searched recursively in the entire tree
+# So, no .gitkeep will be removed from any excluded subdirectory
+
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
-# Virtual environment
-env/
 
 # Distribution / packaging
 .Python
