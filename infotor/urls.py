@@ -15,3 +15,8 @@ urlpatterns = [
 
 # urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+handler404 = 'infotor.views.handler404'
+handler500 = 'infotor.views.handler500'
+
+

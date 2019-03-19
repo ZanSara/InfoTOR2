@@ -18,9 +18,9 @@ from infotor.forms import ForraForm, CheckpointForm
 
 
 # TODO aggiungi pagine custom 500 e 404
-PATH_TO_SEN_TRT = staticfiles_storage.path('dbf/sen_trt.dbf')
-PATH_TO_SEN_PERC = staticfiles_storage.path('dbf/sen_perc.dbf')
-PATH_TO_CON_DIF = staticfiles_storage.path('dbf/con_dif.dbf')
+PATH_TO_SEN_TRT = staticfiles_storage.path('shapefiles/dbf/sen_trt.dbf')
+PATH_TO_SEN_PERC = staticfiles_storage.path('shapefiles/dbf/sen_perc.dbf')
+PATH_TO_CON_DIF = staticfiles_storage.path('shapefiles/dbf/con_dif.dbf')
 
 
 def handler404(request, *args, **argv):
@@ -51,8 +51,8 @@ def mappa(request):
 
     ogr = gdaltools.ogr2ogr()
     ogr.set_encoding("UTF-8")
-    ogr.set_input(staticfiles_storage.path('dbf/sen_trt.shp'))
-    ogr.set_output(staticfiles_storage.path('geojson/torrenti.json'))
+    ogr.set_input(staticfiles_storage.path('shapefiles/dbf/sen_trt.shp'))
+    ogr.set_output(staticfiles_storage.path('shapefiles/geojson/torrenti.json'))
     ogr.execute()
 
     return render(request, 'infotor/mappa.html')
@@ -121,8 +121,8 @@ def modifica_forra(request, id_forra):
                                                             'checkpoint2_form': checkpoint2_form
                                                           })
     
-    
-    
+  
+   
     
     
 def read_dbf(path_to_dbf_file, models):

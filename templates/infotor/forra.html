@@ -220,12 +220,12 @@
     <div class="row section pt-2" id="Checkpoints">
       <div class="col-md-6">
         <h4 class="font-weight-light">Checkpoint 1:</h4>
-        <img class="img-fluid img-thumbnail mt-2" src="{{ MEDIA_URL }}{{ forra.checkpoint1|pic_or_nockpoint }}">
+        <img class="img-fluid img-thumbnail mt-2" src="/{{ forra.checkpoint1|pic_or_nockpoint }}">
         <p><br>{{ forra.checkpoint1.descrizione|value_or_noinfo }}</p>
       </div>
       <div class="col-md-6">
         <h4 class="font-weight-light"> Checkpoint 2:</h4>
-        <img class="img-fluid img-thumbnail mt-2" src="{{ MEDIA_URL }}{{ forra.checkpoint2|pic_or_nockpoint }}">
+        <img class="img-fluid img-thumbnail mt-2" src="/{{ forra.checkpoint2|pic_or_nockpoint }}">
         <p><br>{{ forra.checkpoint2.descrizione|value_or_noinfo }}</p>
       </div>
     </div>
@@ -254,7 +254,7 @@
     <div class="row section pt-2" id="Profilo">
       <div class="col-md-6">
         <h4 class="font-weigth-light">Profilo</h4>
-        <img class="img-fluid img-thumbnail mt-2" src="{{ MEDIA_URL }}{{ forra.profilo|pic_or_noprofilo }}" width="100%">
+        <img class="img-fluid img-thumbnail mt-2" src="/{{ forra.profilo|pic_or_noprofilo }}" width="100%">
       </div>
       <div class="col-md-6">
         <h5>Note</h5>

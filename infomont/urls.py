@@ -15,3 +15,4 @@ urlpatterns = [
 
 handler404 = 'infotor.views.handler404'
 handler500 = 'infotor.views.handler500'
+

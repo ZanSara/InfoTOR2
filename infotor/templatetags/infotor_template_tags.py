@@ -54,13 +54,13 @@ def value_or_noinfo(value):
 @register.filter
 def pic_or_nockpoint(value):
     if value is None or str(value) == '':
-        return "checkpoints/no-checkpoint.png"
-    return "{}".format(value)
+        return "static/images/no-checkpoint.png"
+    return "media/checkpoints/{}".format(value)
     
     
 @register.filter
 def pic_or_noprofilo(value):
     if value is None or str(value) == '':
-        return "profili/no-profilo.png"
-    return "{}".format(value)
+        return "static/images/no-profilo.png"
+    return "media/profili/{}".format(value)
     
